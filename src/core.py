@@ -16,7 +16,6 @@ SEEN_CACHE_MAX = int(os.environ.get("SEEN_CACHE_MAX", 5000))
 MAX_ALLOWED_DAYS = int(os.environ.get("MAX_ALLOWED_DAYS", 5000))
 
 
-
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}"
 }
