@@ -13,23 +13,28 @@ REST_ISSUES = "https://api.github.com/search/issues"
 
 ## ENVIRONMENT ###
 SEEN_CACHE_MAX = int(os.environ.get("SEEN_CACHE_MAX", 5000))
-MAX_ALLOWED_DAYS = int(os.environ.get("MAX_ALLOWED_DAYS", 5000))
+MAX_ALLOWED_DAYS = int(os.environ.get("MAX_ALLOWED_DAYS", 365))
 
 
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}"
 }
 
+CACHE_DIR = os.path.expanduser(
+    os.environ.get("KEYWORD_ISSUE_RADAR_CACHE_DIR", "~/.cache/keyword-issue-radar")
+)
+os.makedirs(CACHE_DIR, exist_ok=True)
+
 # Skip already seen entries and avoid repetitions
 SEEN_CACHE_FILE = os.environ.get(
     "GH_SEEN_ISSUES_FILE",
-    os.path.expanduser("~/.gh_devops_scan_seen.json")
+    os.path.join(CACHE_DIR, "seen_issues.json")
 )
 
 # Repository stars cache, avoids calling GraphQL every time for already known repos
 STARS_CACHE_FILE = os.environ.get(
     "GH_STARS_CACHE_FILE",
-    os.path.expanduser("~/.gh_devops_scan_stars.json")
+    os.path.join(CACHE_DIR,"repo_stars.json")
 )
 STARS_CACHE_TTL_DAYS = 3
 
