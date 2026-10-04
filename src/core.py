@@ -369,7 +369,7 @@ final.sort(key=lambda x: x[0], reverse=True)
 # -----------------------------
 top = final[:100]
 
-print(f"\nTOP NEW DEVOPS ISSUES - {len(top)} found (cache: {SEEN_CACHE_FILE})\n")
+print(f"\nTOP NEW ISSUES - {len(top)} found (cache: {SEEN_CACHE_FILE})\n")
 
 for i, (issue_score, stars, url, title, repo, reasons) in enumerate(top, 1):
     print(f"{i:03d}. score:{issue_score} stars:{stars}")
