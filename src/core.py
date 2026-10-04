@@ -8,10 +8,14 @@ import requests
 from datetime import datetime, timedelta, timezone
 
 TOKEN = os.environ["GH_TOKEN"]
-SEEN_CACHE_MAX = int(os.environ.get("SEEN_CACHE_MAX", 5000))
-
 GRAPHQL_URL = "https://api.github.com/graphql"
 REST_ISSUES = "https://api.github.com/search/issues"
+
+## ENVIRONMENT ###
+SEEN_CACHE_MAX = int(os.environ.get("SEEN_CACHE_MAX", 5000))
+MAX_ALLOWED_DAYS = int(os.environ.get("MAX_ALLOWED_DAYS", 5000))
+
+
 
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}"
@@ -51,7 +55,7 @@ use_seen_cache = not args.no_cache
 if args.no_cache:
     print("'already seen' cache DISABLED: issues from previous runs will also be shown\n")
 
-cutoff_date = (datetime.now(timezone.utc) - timedelta(days=365)).strftime("%Y-%m-%d")
+cutoff_date = (datetime.now(timezone.utc) - timedelta(days=MAX_ALLOWED_DAYS)).strftime("%Y-%m-%d")
 
 if len(keywords) > KEYWORDS_PER_QUERY:
     parser.error(f"Maximum {KEYWORDS_PER_QUERY} keywords allowed")
